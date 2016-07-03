@@ -9,7 +9,9 @@ module.exports = {
 
   authorize: function(req, res) {
 
-    FitbitService.authorize(null)
+    var code = req.query.code
+
+    FitbitService.authorize(code)
 
     return res.json({
       todo: sails.config.fitbit

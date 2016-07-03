@@ -1,11 +1,10 @@
 // FitbitService.js - in api/services
 module.exports = {
 
-  authorize: function(stuff) {
+  authorize: function(code) {
 
-    console.log("yup")
 
-    Fitbit.authorize(null)
+    Fitbit.authorize(code)
 
   }
 };

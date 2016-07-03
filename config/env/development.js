@@ -25,6 +25,6 @@ module.exports = {
     clientId        : '227VRZ',
     clientSecret    : 'a07143af9621d725f6669ed1371eee1b',
     authorizeUri    : 'https://www.fitbit.com/oauth2/authorize',
-    refreshTokenUri : 'https://api.fitbit.com/oauth2/token'
+    tokenUri : 'https://api.fitbit.com/oauth2/token'
   }
 };

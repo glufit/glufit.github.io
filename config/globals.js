@@ -60,4 +60,9 @@ module.exports.globals = {
   ****************************************************************************/
 
 	// models: true
+
+  fitbit: {
+    accessToken: "",
+    refreshToken: ""
+  }
 };
