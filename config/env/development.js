@@ -21,11 +21,16 @@ module.exports = {
   //   connection: 'someMongodbServer'
   // }
 
-  fitbit :{
+  fitbit: {
     clientId        : '227VRZ',
     clientSecret    : 'a07143af9621d725f6669ed1371eee1b',
     authorizeUri    : 'https://www.fitbit.com/oauth2/authorize',
     tokenUri        : 'https://api.fitbit.com/oauth2/token',
     stepsIntradayUri: "https://api.fitbit.com/1/user/-/activities/"
+  },
+
+  livongo: {
+    authorizeUri : 'https://mw.livongo.com/v1/users/me/auth',
+    readingsUri  : 'https://mw.livongo.com/v1/users/me/readings/bgs'
   }
 };

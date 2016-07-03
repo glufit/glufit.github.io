@@ -13,9 +13,7 @@ module.exports = {
 
     FitbitService.authorize(code)
 
-    return res.json({
-      todo: sails.config.fitbit
-    });
+    return res.json({});
   },
 
   getIntraDayData: function(req, res) {

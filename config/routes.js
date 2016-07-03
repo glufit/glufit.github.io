@@ -35,9 +35,10 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  'post /fitbit/authorize': 'FitbitController.authorize',
-  'get /fitbit/intradayData': 'FitbitController.getIntraDayData'
-
+  'post /fitbit/authorize'    : 'FitbitController.authorize',
+  'get  /fitbit/intradayData' : 'FitbitController.getIntraDayData',
+  'post /livongo/authorize'   : 'LivongoController.authorize',
+  'get  /livongo/readings'    : 'LivongoController.getReadings'
 
   /***************************************************************************
   *                                                                          *

@@ -64,5 +64,10 @@ module.exports.globals = {
   fitbit: {
     accessToken: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzV0pSWjUiLCJhdWQiOiIyMjdWUloiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNDY3NTM5MjE1LCJpYXQiOjE0Njc1MzU2MTV9.SnT5IDo1MFT6dsGGNpTypCyNoYdHshLbAQnu2tlkkj0",
     refreshToken: "c03bdecd65afecbb90a1ef77f1652ee96a424b3cae860d77181b6352c61deea5"
+  },
+
+  livongo: {
+    accessToken: "",
+    refreshToken: ""
   }
 };
