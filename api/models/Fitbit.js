@@ -1,3 +1,4 @@
+var utils   = require('../utils/utils')
 var request = require('request');
 
 var url          = sails.config.fitbit.tokenUri
@@ -45,8 +46,6 @@ module.exports = {
     var bearerToken  = new Buffer(clientId + ":" + clientSecret).toString('base64')
 
     var data = {
-      code:          code,
-      clientId:      clientId,
       grant_type:    "refresh_token",
       refresh_token: sails.config.globals.fitbit.refreshToken
     }
@@ -63,6 +62,7 @@ module.exports = {
     }
 
     request.post(options, function(err,httpResponse,body){
+      console.log(httpResponse.statusCode)
       handleTokens(body)
     })
   },
@@ -80,8 +80,8 @@ module.exports = {
       headers: headers
     }
 
-    request.get(options, function(err,httpResponse,body){
-      var data = JSON.parse(body)["activities-" + activityType + "-intraday"]["dataset"]
+    utils.getRequest(options, function(resp,err){
+      var data = JSON.parse(resp)["activities-" + activityType + "-intraday"]["dataset"]
       cb(data, null)
     })
   }
