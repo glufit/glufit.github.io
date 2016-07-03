@@ -12,6 +12,14 @@ module.exports = {
         cb(body, null)
       }
     })
+  },
+
+  handleTokens: function(body) {
+    var json = JSON.parse(body)
+    var accessToken  = json.access_token
+    var refreshToken = json.refresh_token
+    sails.config.globals.fitbit.accessToken  = accessToken
+    sails.config.globals.fitbit.refreshToken = refreshToken
   }
 
 }

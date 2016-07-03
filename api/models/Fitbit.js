@@ -5,14 +5,6 @@ var url          = sails.config.fitbit.tokenUri
 var clientId     = sails.config.fitbit.clientId
 var clientSecret = sails.config.fitbit.clientSecret
 
-handleTokens = function(body) {
-  var json = JSON.parse(body)
-  var accessToken  = json.access_token
-  var refreshToken = json.refresh_token
-  sails.config.globals.fitbit.accessToken  = accessToken
-  sails.config.globals.fitbit.refreshToken = refreshToken
-}
-
 module.exports = {
 
   authorize: function(code, cb) {
@@ -38,7 +30,7 @@ module.exports = {
     }
 
     request.post(options, function(err,httpResponse,body){
-      handleTokens(body)
+      utils.handleTokens(body)
     })
   },
 
@@ -62,8 +54,7 @@ module.exports = {
     }
 
     request.post(options, function(err,httpResponse,body){
-      console.log(httpResponse.statusCode)
-      handleTokens(body)
+      utils.handleTokens(body)
     })
   },
 
