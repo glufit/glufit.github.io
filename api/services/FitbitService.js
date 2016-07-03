@@ -6,5 +6,13 @@ module.exports = {
 
     Fitbit.authorize(code)
 
+  },
+  
+  getIntraDayData: function(type, date, cb) {
+    Fitbit.stepsIntraday(type, date, function(resp, err){
+
+      cb(resp, err)
+    })
   }
+  
 };

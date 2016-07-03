@@ -16,6 +16,16 @@ module.exports = {
     return res.json({
       todo: sails.config.fitbit
     });
+  },
+
+  getIntraDayData: function(req, res) {
+    var type = req.query.type
+    var date = req.query.date
+
+    FitbitService.getIntraDayData(type, date, function(resp, err) {
+
+      return res.json(resp)
+    })
   }
 };
 

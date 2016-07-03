@@ -65,5 +65,24 @@ module.exports = {
     request.post(options, function(err,httpResponse,body){
       handleTokens(body)
     })
+  },
+
+  stepsIntraday: function(activityType, date, cb) {
+
+    var headers = {
+      'Authorization': 'Bearer ' + sails.config.globals.fitbit.accessToken
+    }
+
+    var url = sails.config.fitbit.stepsIntradayUri + activityType + "/date/" + date + "/1d.json"
+
+    var options = {
+      url: url,
+      headers: headers
+    }
+
+    request.get(options, function(err,httpResponse,body){
+      var data = JSON.parse(body)["activities-" + activityType + "-intraday"]["dataset"]
+      cb(data, null)
+    })
   }
 };

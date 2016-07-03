@@ -35,7 +35,9 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  'post /fitbit/authorize': 'FitbitController.authorize'
+  'post /fitbit/authorize': 'FitbitController.authorize',
+  'get /fitbit/intradayData': 'FitbitController.getIntraDayData'
+
 
   /***************************************************************************
   *                                                                          *
