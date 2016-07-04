@@ -27,7 +27,9 @@ let LivongoService = class LivongoService {
     }
     getReadings(start, end) {
         this.livongoRepository.getReadings(start, end).then(readings => {
-            readings.readings.map(x => { });
+            readings.readings.map(bgReadings => {
+                this.bgReadings = bgReadings;
+            });
             return readings;
         });
     }
