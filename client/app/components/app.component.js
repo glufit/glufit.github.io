@@ -150,14 +150,20 @@ let AppComponent = class AppComponent {
             this.chart.addSeries(this.fitbitHeartOptions, true, true);
             this.chart.addSeries(this.livongoOptions, true, true);
             this.chart.redraw(true);
+            document.getElementsByClassName("highcharts-container")[0].classList.add('animated', 'flipInY');
         });
+    }
+    onResize(event) {
+        this.chart.setSize(window.innerWidth, window.innerHeight, true);
     }
 };
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
         directives: [angular2_highcharts_1.CHART_DIRECTIVES],
-        template: '<chart [options]="options" ' +
+        template: '<chart id = "mainChart"' +
+            '                 (window:resize)="onResize($event)"' +
+            '                 [options]="options" ' +
             '                 (load)="saveInstance($event.context)"></chart>',
         providers: [
             livongo_service_1.LivongoService,

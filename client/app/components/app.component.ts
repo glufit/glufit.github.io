@@ -15,7 +15,9 @@ import _ = require("underscore");
 @Component({
   selector: 'my-app',
   directives: [CHART_DIRECTIVES],
-  template: '<chart [options]="options" ' +
+  template: '<chart id = "mainChart"' +
+  '                 (window:resize)="onResize($event)"' +
+  '                 [options]="options" ' +
   '                 (load)="saveInstance($event.context)"></chart>',
   providers: [
     LivongoService,
@@ -179,8 +181,15 @@ export class AppComponent {
       this.chart.addSeries(this.fitbitHeartOptions, true, true)
       this.chart.addSeries(this.livongoOptions,     true, true)
       this.chart.redraw(true)
+      document.getElementsByClassName("highcharts-container")[0].classList.add('animated', 'flipInY')
+
+
     });
 
 
+  }
+
+  onResize(event) {
+    this.chart.setSize(window.innerWidth, window.innerHeight,true)
   }
 }
