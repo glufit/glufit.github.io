@@ -23,10 +23,8 @@ export class LivongoService {
     this.livongoRepository.getReadings(start, end).then(
       readings  => {
 
-        readings.readings.map(bgReadings => {
-          this.bgReadings = bgReadings
-        })
-
+        this.bgReadings = readings
+        
         return readings
       });
   }

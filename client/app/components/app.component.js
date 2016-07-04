@@ -11,9 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require('@angular/core');
 const livongo_service_1 = require("../services/livongo.service");
 const livongo_repo_1 = require("../repo/livongo.repo");
+const angular2_highcharts_1 = require('angular2-highcharts');
 let AppComponent = class AppComponent {
     constructor(livongoService) {
         this.livongoService = livongoService;
+        this.options = {
+            title: { text: 'simple chart' },
+            series: [{
+                    data: [29.9, 71.5, 106.4, 129.2],
+                }]
+        };
     }
     ngOnInit() {
         this.livongoService.authorize();
@@ -23,11 +30,17 @@ let AppComponent = class AppComponent {
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        template: '<h1>My First Angular 2 App</h1>',
+        directives: [angular2_highcharts_1.CHART_DIRECTIVES],
+        template: '<chart [options]="options"></chart>',
         providers: [
             livongo_service_1.LivongoService,
             livongo_repo_1.LivongoRepository
-        ]
+        ],
+        styles: [`
+      chart {
+        display: block;
+      }
+    `]
     }), 
     __metadata('design:paramtypes', [livongo_service_1.LivongoService])
 ], AppComponent);
