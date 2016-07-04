@@ -10,9 +10,12 @@ module.exports = {
 
     var credentials = req.body
 
-    LivongoService.authorize(credentials)
-
-    return res.json({});
+    LivongoService.authorize(credentials, function(resp, err){
+      console.log(resp)
+      console.log(res.headers)
+      res = res.set('Access-Control-Allow-Origin', '*')
+      return res.json(resp);
+    })
   },
 
   getReadings: function(req, res) {

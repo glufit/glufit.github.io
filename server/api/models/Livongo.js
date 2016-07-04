@@ -25,6 +25,7 @@ module.exports = {
       var refreshToken = json.refresh_token
       sails.config.globals.livongo.accessToken  = accessToken
       sails.config.globals.livongo.refreshToken = refreshToken
+      cb(json)
     })
 
   },

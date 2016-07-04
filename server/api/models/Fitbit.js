@@ -31,6 +31,8 @@ module.exports = {
 
     request.post(options, function(err,httpResponse,body){
       utils.handleTokens(body)
+      console.log(body)
+      cb(body, null)
     })
   },
 
