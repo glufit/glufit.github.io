@@ -11,7 +11,9 @@ module.exports = {
 
     var code = req.query.code
 
-    FitbitService.authorize(code)
+    FitbitService.authorize(code, function(resp, err){
+      console.log(resp)
+    })
 
     return res.json({});
   },

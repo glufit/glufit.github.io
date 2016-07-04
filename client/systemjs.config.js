@@ -11,7 +11,8 @@
     'rxjs':                       'node_modules/rxjs',
     'moment': 'node_modules/moment',
     'angular2-highcharts':        'https://cdn.rawgit.com/gevgeny/angular2-highcharts/0.1.0/dist',
-    'highcharts/highstock.src':   'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js'
+    'highcharts/highstock.src':   'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js',
+    'underscore' : 'node_modules/underscore'
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
@@ -19,7 +20,8 @@
     'rxjs':                       { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
     'moment': { defaultExtension: 'js'},
-    'angular2-highcharts' :       { main: 'index',format: 'cjs', defaultExtension: 'js' }
+    'angular2-highcharts' :       { main: 'index',format: 'cjs', defaultExtension: 'js' },
+    'underscore': {main: 'underscore', defaultExtension: 'js'}
 
   };
   var ngPackageNames = [

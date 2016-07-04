@@ -39,8 +39,6 @@ export class LivongoRepository {
           let timeStamp = moment(jsonEntry.timestamp).format("YYYY-MM-DD T HH:MM:SS").toString()
           return new BgReading( timeStamp, jsonEntry.value)
         })
-
-        console.log(bgReadings)
         return new BgReadings(bgReadings)
       })
   }

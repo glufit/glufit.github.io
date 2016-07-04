@@ -11,15 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require('@angular/core');
 const http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
-const LivongoReadings_1 = require("../common/user/LivongoReadings");
-const LivongoAuth_1 = require("../common/user/LivongoAuth");
-const moment = require('moment/moment');
-let LivongoRepository = class LivongoRepository {
+const FitbitAuth_1 = require("../common/user/FitbitAuth");
+const FitbitIntradayData_1 = require("../common/user/FitbitIntradayData");
+let FitbitRepository = class FitbitRepository {
     constructor(http) {
         this.http = http;
         this.baseUrl = "http://localhost:1337/";
-        this.tokenUrl = "livongo/authorize";
-        this.readingsUrl = "livongo/readings";
+        this.tokenUrl = "fitbit/authorize";
+        this.intraDayDataUrl = "fitbit/intradayData";
     }
     authorize(username, password) {
         let url = this.baseUrl + this.tokenUrl;
@@ -28,28 +27,27 @@ let LivongoRepository = class LivongoRepository {
             .toPromise()
             .then(response => {
             let auth = response.json();
-            let authTokens = new LivongoAuth_1.LivongoAuth(auth.access_token, auth.refresh_token);
+            let authTokens = new FitbitAuth_1.FitbitAuth(auth.access_token, auth.refresh_token);
             return authTokens;
         });
     }
-    getReadings(start, end) {
-        let url = this.baseUrl + this.readingsUrl;
-        let queryParams = "?start=" + start + "&end=" + end;
+    getIntradayData(type, date) {
+        let url = this.baseUrl + this.intraDayDataUrl;
+        let queryParams = "?type=" + type + "&date=" + date;
         return this.http.get(url + queryParams)
             .toPromise()
             .then(response => {
-            let bgs = response.json().bgs;
-            let bgReadings = bgs.map(jsonEntry => {
-                let timeStamp = moment(jsonEntry.timestamp).format("YYYY-MM-DD T HH:MM:SS").toString();
-                return new LivongoReadings_1.BgReading(timeStamp, jsonEntry.value);
+            let json = response.json();
+            let intradayData = json.map(data => {
+                return new FitbitIntradayData_1.FitbitIntraDayData(type, date + "T" + data.time, data.value);
             });
-            return new LivongoReadings_1.BgReadings(bgReadings);
+            return new FitbitIntradayData_1.FitbitIntraDayDataSet(intradayData);
         });
     }
 };
-LivongoRepository = __decorate([
+FitbitRepository = __decorate([
     core_1.Injectable(), 
     __metadata('design:paramtypes', [http_1.Http])
-], LivongoRepository);
-exports.LivongoRepository = LivongoRepository;
-//# sourceMappingURL=livongo.repo.js.map
+], FitbitRepository);
+exports.FitbitRepository = FitbitRepository;
+//# sourceMappingURL=fitbit.repo.js.map
