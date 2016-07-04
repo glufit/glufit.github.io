@@ -20,11 +20,11 @@ export class LivongoService {
   }
 
   getReadings(start, end) {
-    this.livongoRepository.getReadings(start, end).then(
+    return this.livongoRepository.getReadings(start, end).then(
       readings  => {
 
         this.bgReadings = readings
-        
+
         return readings
       });
   }
