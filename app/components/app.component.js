@@ -22,6 +22,8 @@ var AppComponent = (function () {
     function AppComponent(livongoService, fitbitService) {
         this.livongoService = livongoService;
         this.fitbitService = fitbitService;
+        this.startDate = '2016-06-25';
+        this.currDate = this.startDate;
         this.options = {
             chart: {
                 type: 'scatter',
@@ -72,22 +74,37 @@ var AppComponent = (function () {
     AppComponent.prototype.saveInstance = function (chartInstance) {
         this.chart = chartInstance;
     };
-    AppComponent.prototype.ngOnInit = function () {
+    AppComponent.prototype.onResize = function (event) {
+        this.chart.setSize(window.innerWidth, window.innerHeight, true);
+    };
+    AppComponent.prototype.previousDay = function () {
+        while (this.chart.series.length > 0)
+            this.chart.series[0].remove(true);
+        var previousDay = moment_1.utc(this.currDate + 'T00:00:00').subtract(1, 'day').format('YYYY-MM-DD');
+        this.currDate = previousDay;
+        this.setDay(previousDay);
+    };
+    AppComponent.prototype.nextDay = function () {
+        while (this.chart.series.length > 0)
+            this.chart.series[0].remove(true);
+        var nextDate = moment_1.utc(this.currDate + 'T00:00:00').add(1, 'day').format('YYYY-MM-DD');
+        this.currDate = nextDate;
+        this.setDay(nextDate);
+    };
+    AppComponent.prototype.setDay = function (date) {
         var _this = this;
-        var date = '2016-06-25';
-        this.livongoService.authorize();
-        var livongoPromise = this.livongoService.getReadings(date, '2016-06-26').then(function (readings) {
+        var livongoPromise = this.livongoService.getReadings(date, moment_1.utc(date + 'T00:00:00').add(1, 'day').format('YYYY-MM-DD')).then(function (readings) {
             var onlyValues = readings.readings.map(function (reading) {
                 return [moment(reading.datetime).toDate().getTime(), reading.value];
             });
             if (onlyValues.length == 0)
                 onlyValues = [
-                    [moment_1.utc("2016-06-25T01:00:00").toDate().getTime(), 49.9],
-                    [moment_1.utc("2016-06-25T12:00:00").toDate().getTime(), 71.5],
-                    [moment_1.utc("2016-06-25T14:00:00").toDate().getTime(), 89.9],
-                    [moment_1.utc("2016-06-25T15:00:00").toDate().getTime(), 100.9],
-                    [moment_1.utc("2016-06-25T18:00:00").toDate().getTime(), 150.9],
-                    [moment_1.utc("2016-06-25T22:00:00").toDate().getTime(), 145.9],
+                    [moment_1.utc(date + "T01:00:00").toDate().getTime(), 49.9],
+                    [moment_1.utc(date + "T12:00:00").toDate().getTime(), 71.5],
+                    [moment_1.utc(date + "T14:00:00").toDate().getTime(), 89.9],
+                    [moment_1.utc(date + "T15:00:00").toDate().getTime(), 100.9],
+                    [moment_1.utc(date + "T18:00:00").toDate().getTime(), 150.9],
+                    [moment_1.utc(date + "T22:00:00").toDate().getTime(), 145.9],
                 ];
             var options = {
                 marker: {
@@ -154,17 +171,15 @@ var AppComponent = (function () {
             document.getElementsByClassName("highcharts-container")[0].classList.add('animated', 'flipInY');
         });
     };
-    AppComponent.prototype.onResize = function (event) {
-        this.chart.setSize(window.innerWidth, window.innerHeight, true);
+    AppComponent.prototype.ngOnInit = function () {
+        this.livongoService.authorize();
+        this.setDay(this.startDate);
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
             directives: [angular2_highcharts_1.CHART_DIRECTIVES],
-            template: '<chart id = "mainChart"' +
-                '                 (window:resize)="onResize($event)"' +
-                '                 [options]="options" ' +
-                '                 (load)="saveInstance($event.context)"></chart>',
+            templateUrl: 'app/html/app.component.html',
             providers: [
                 livongo_service_1.LivongoService,
                 livongo_repo_1.LivongoRepository,

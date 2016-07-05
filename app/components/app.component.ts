@@ -15,10 +15,7 @@ import _ = require("underscore");
 @Component({
   selector: 'my-app',
   directives: [CHART_DIRECTIVES],
-  template: '<chart id = "mainChart"' +
-  '                 (window:resize)="onResize($event)"' +
-  '                 [options]="options" ' +
-  '                 (load)="saveInstance($event.context)"></chart>',
+  templateUrl: 'app/html/app.component.html',
   providers: [
     LivongoService,
     LivongoRepository,
@@ -90,24 +87,45 @@ export class AppComponent {
   saveInstance(chartInstance) {
       this.chart = chartInstance;
   }
+  startDate: String = '2016-06-25'
+  currDate:  String = this.startDate
 
-  ngOnInit() {
-    let date = '2016-06-25'
-    this.livongoService.authorize()
 
-    let livongoPromise = this.livongoService.getReadings(date, '2016-06-26').then( (readings: BgReadings) => {
+
+  onResize(event) {
+    this.chart.setSize(window.innerWidth, window.innerHeight,true)
+  }
+
+  previousDay(){
+    while(this.chart.series.length > 0)
+      this.chart.series[0].remove(true);
+    let previousDay = utc(this.currDate + 'T00:00:00').subtract(1, 'day').format('YYYY-MM-DD')
+    this.currDate = previousDay
+    this.setDay(previousDay)
+  }
+
+  nextDay(){
+    while(this.chart.series.length > 0)
+      this.chart.series[0].remove(true);
+    let nextDate = utc(this.currDate + 'T00:00:00').add(1, 'day').format('YYYY-MM-DD')
+    this.currDate = nextDate
+    this.setDay(nextDate)
+  }
+
+  setDay(date) {
+    let livongoPromise = this.livongoService.getReadings(date, utc(date+'T00:00:00').add(1, 'day').format('YYYY-MM-DD') ).then( (readings: BgReadings) => {
       let onlyValues = readings.readings.map(reading => {
         return [moment(reading.datetime).toDate().getTime(), reading.value]
       })
 
       if(onlyValues.length == 0)
         onlyValues = [
-          [utc("2016-06-25T01:00:00").toDate().getTime(), 49.9],
-          [utc("2016-06-25T12:00:00").toDate().getTime(), 71.5],
-          [utc("2016-06-25T14:00:00").toDate().getTime(), 89.9],
-          [utc("2016-06-25T15:00:00").toDate().getTime(), 100.9],
-          [utc("2016-06-25T18:00:00").toDate().getTime(), 150.9],
-          [utc("2016-06-25T22:00:00").toDate().getTime(), 145.9],
+          [utc(date + "T01:00:00").toDate().getTime(), 49.9],
+          [utc(date + "T12:00:00").toDate().getTime(), 71.5],
+          [utc(date + "T14:00:00").toDate().getTime(), 89.9],
+          [utc(date + "T15:00:00").toDate().getTime(), 100.9],
+          [utc(date + "T18:00:00").toDate().getTime(), 150.9],
+          [utc(date + "T22:00:00").toDate().getTime(), 145.9],
         ]
 
       let options = {
@@ -182,14 +200,13 @@ export class AppComponent {
       this.chart.addSeries(this.livongoOptions,     true, true)
       this.chart.redraw(true)
       document.getElementsByClassName("highcharts-container")[0].classList.add('animated', 'flipInY')
-
-
     });
-
-
   }
 
-  onResize(event) {
-    this.chart.setSize(window.innerWidth, window.innerHeight,true)
+  ngOnInit() {
+    this.livongoService.authorize()
+
+    this.setDay(this.startDate)
+
   }
 }
