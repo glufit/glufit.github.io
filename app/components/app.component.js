@@ -9,17 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 /// <reference path="../../node_modules/underscore/underscore.browser.d.ts" />
-const core_1 = require('@angular/core');
-const livongo_service_1 = require("../services/livongo.service");
-const livongo_repo_1 = require("../repo/livongo.repo");
-const angular2_highcharts_1 = require('angular2-highcharts');
-const moment = require('moment/moment');
-const moment_1 = require('moment/moment');
-const fitbit_service_1 = require("../services/fitbit.service");
-const fitbit_repo_1 = require("../repo/fitbit.repo");
-const _ = require("underscore");
-let AppComponent = class AppComponent {
-    constructor(livongoService, fitbitService) {
+var core_1 = require('@angular/core');
+var livongo_service_1 = require("../services/livongo.service");
+var livongo_repo_1 = require("../repo/livongo.repo");
+var angular2_highcharts_1 = require('angular2-highcharts');
+var moment = require('moment/moment');
+var moment_1 = require('moment/moment');
+var fitbit_service_1 = require("../services/fitbit.service");
+var fitbit_repo_1 = require("../repo/fitbit.repo");
+var _ = require("underscore");
+var AppComponent = (function () {
+    function AppComponent(livongoService, fitbitService) {
         this.livongoService = livongoService;
         this.fitbitService = fitbitService;
         this.options = {
@@ -69,14 +69,15 @@ let AppComponent = class AppComponent {
                 }],
         };
     }
-    saveInstance(chartInstance) {
+    AppComponent.prototype.saveInstance = function (chartInstance) {
         this.chart = chartInstance;
-    }
-    ngOnInit() {
-        let date = '2016-06-25';
+    };
+    AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var date = '2016-06-25';
         this.livongoService.authorize();
-        let livongoPromise = this.livongoService.getReadings(date, '2016-06-26').then((readings) => {
-            let onlyValues = readings.readings.map(reading => {
+        var livongoPromise = this.livongoService.getReadings(date, '2016-06-26').then(function (readings) {
+            var onlyValues = readings.readings.map(function (reading) {
                 return [moment(reading.datetime).toDate().getTime(), reading.value];
             });
             if (onlyValues.length == 0)
@@ -88,7 +89,7 @@ let AppComponent = class AppComponent {
                     [moment_1.utc("2016-06-25T18:00:00").toDate().getTime(), 150.9],
                     [moment_1.utc("2016-06-25T22:00:00").toDate().getTime(), 145.9],
                 ];
-            let options = {
+            var options = {
                 marker: {
                     radius: 7
                 },
@@ -102,19 +103,19 @@ let AppComponent = class AppComponent {
                 allowPointSelect: true,
                 color: '#0DCC00'
             };
-            this.livongoOptions = options;
+            _this.livongoOptions = options;
         });
-        let fitbitPromise = this.fitbitService.getIntradayData('steps', date).then((readings) => {
-            let x = _.groupBy(readings.set, function (data) {
+        var fitbitPromise = this.fitbitService.getIntradayData('steps', date).then(function (readings) {
+            var x = _.groupBy(readings.set, function (data) {
                 return moment(data.timestamp).hour();
             });
-            let dateObj = new Date(date);
-            let dateObjWithSum = _.map(x, function (arr, key) {
-                let sum = _.reduce(arr, function (memo, data) { return memo + data["value"]; }, 0);
+            var dateObj = new Date(date);
+            var dateObjWithSum = _.map(x, function (arr, key) {
+                var sum = _.reduce(arr, function (memo, data) { return memo + data["value"]; }, 0);
                 dateObj.setUTCHours(+key);
                 return [dateObj.getTime(), sum];
             });
-            let options = {
+            var options = {
                 name: 'Fitbit Steps',
                 type: 'column',
                 yAxis: 0,
@@ -125,15 +126,15 @@ let AppComponent = class AppComponent {
                 color: '#247BFF',
                 pointWidth: 30
             };
-            this.fitbitOptions = options;
+            _this.fitbitOptions = options;
         });
-        let fitbitHeartPromise = this.fitbitService.getIntradayData('heart', date).then((readings) => {
-            let dateObjWithHeartRate = _.map(readings.set, function (value, key) {
-                let x = value;
-                let dateStr = x.timestamp;
+        var fitbitHeartPromise = this.fitbitService.getIntradayData('heart', date).then(function (readings) {
+            var dateObjWithHeartRate = _.map(readings.set, function (value, key) {
+                var x = value;
+                var dateStr = x.timestamp;
                 return [moment_1.utc(dateStr).toDate().getTime(), x.value];
             });
-            let options = {
+            var options = {
                 name: 'Fitbit HeartRate Data',
                 type: 'line',
                 yAxis: 1,
@@ -143,42 +144,38 @@ let AppComponent = class AppComponent {
                 },
                 color: '#F90000'
             };
-            this.fitbitHeartOptions = options;
+            _this.fitbitHeartOptions = options;
         });
-        Promise.all([fitbitPromise, fitbitHeartPromise, livongoPromise]).then(values => {
-            this.chart.addSeries(this.fitbitOptions, true, true);
-            this.chart.addSeries(this.fitbitHeartOptions, true, true);
-            this.chart.addSeries(this.livongoOptions, true, true);
-            this.chart.redraw(true);
+        Promise.all([fitbitPromise, fitbitHeartPromise, livongoPromise]).then(function (values) {
+            _this.chart.addSeries(_this.fitbitOptions, true, true);
+            _this.chart.addSeries(_this.fitbitHeartOptions, true, true);
+            _this.chart.addSeries(_this.livongoOptions, true, true);
+            _this.chart.redraw(true);
             document.getElementsByClassName("highcharts-container")[0].classList.add('animated', 'flipInY');
         });
-    }
-    onResize(event) {
+    };
+    AppComponent.prototype.onResize = function (event) {
         this.chart.setSize(window.innerWidth, window.innerHeight, true);
-    }
-};
-AppComponent = __decorate([
-    core_1.Component({
-        selector: 'my-app',
-        directives: [angular2_highcharts_1.CHART_DIRECTIVES],
-        template: '<chart id = "mainChart"' +
-            '                 (window:resize)="onResize($event)"' +
-            '                 [options]="options" ' +
-            '                 (load)="saveInstance($event.context)"></chart>',
-        providers: [
-            livongo_service_1.LivongoService,
-            livongo_repo_1.LivongoRepository,
-            fitbit_service_1.FitbitService,
-            fitbit_repo_1.FitbitRepository
-        ],
-        styles: [`
-      chart {
-        width: 100%;
-        height: 100%;
-      }
-    `]
-    }), 
-    __metadata('design:paramtypes', [livongo_service_1.LivongoService, fitbit_service_1.FitbitService])
-], AppComponent);
+    };
+    AppComponent = __decorate([
+        core_1.Component({
+            selector: 'my-app',
+            directives: [angular2_highcharts_1.CHART_DIRECTIVES],
+            template: '<chart id = "mainChart"' +
+                '                 (window:resize)="onResize($event)"' +
+                '                 [options]="options" ' +
+                '                 (load)="saveInstance($event.context)"></chart>',
+            providers: [
+                livongo_service_1.LivongoService,
+                livongo_repo_1.LivongoRepository,
+                fitbit_service_1.FitbitService,
+                fitbit_repo_1.FitbitRepository
+            ],
+            styles: ["\n      chart {\n        width: 100%;\n        height: 100%;\n      }\n    "]
+        }), 
+        __metadata('design:paramtypes', [livongo_service_1.LivongoService, fitbit_service_1.FitbitService])
+    ], AppComponent);
+    return AppComponent;
+}());
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

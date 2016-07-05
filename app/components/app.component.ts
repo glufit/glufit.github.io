@@ -1,4 +1,4 @@
-/// <reference path="../../node_modules/underscoreWithTypings/underscore.browser.d.ts" />
+/// <reference path="../../node_modules/underscore/underscore.browser.d.ts" />
 import { Component, OnInit } from '@angular/core';
 import {LivongoService} from "../services/livongo.service";
 import {LivongoRepository} from "../repo/livongo.repo";

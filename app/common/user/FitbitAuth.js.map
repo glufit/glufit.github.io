@@ -1,1 +1,1 @@
-{"version":3,"file":"FitbitAuth.js","sourceRoot":"","sources":["FitbitAuth.ts"],"names":[],"mappings":";AAAA;IACE,YAAmB,WAAmB,EAAS,YAAoB;QAAhD,gBAAW,GAAX,WAAW,CAAQ;QAAS,iBAAY,GAAZ,YAAY,CAAQ;IAAG,CAAC;AACzE,CAAC;AAFY,kBAAU,aAEtB,CAAA"}
+{"version":3,"file":"FitbitAuth.js","sourceRoot":"","sources":["FitbitAuth.ts"],"names":[],"mappings":";AAAA;IACE,oBAAmB,WAAmB,EAAS,YAAoB;QAAhD,gBAAW,GAAX,WAAW,CAAQ;QAAS,iBAAY,GAAZ,YAAY,CAAQ;IAAG,CAAC;IACzE,iBAAC;AAAD,CAAC,AAFD,IAEC;AAFY,kBAAU,aAEtB,CAAA"}

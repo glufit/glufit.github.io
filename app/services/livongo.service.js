@@ -11,31 +11,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-const core_1 = require('@angular/core');
-const http_1 = require('@angular/http');
+var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
-const livongo_repo_1 = require("../repo/livongo.repo");
-let LivongoService = class LivongoService {
-    constructor(http, livongoRepository) {
+var livongo_repo_1 = require("../repo/livongo.repo");
+var LivongoService = (function () {
+    function LivongoService(http, livongoRepository) {
         this.http = http;
         this.livongoRepository = livongoRepository;
     }
-    authorize() {
-        this.livongoRepository.authorize("barevalo@livongo.com", "CAMera14").then(auth => {
+    LivongoService.prototype.authorize = function () {
+        this.livongoRepository.authorize("barevalo@livongo.com", "CAMera14").then(function (auth) {
             return auth;
         });
-    }
-    getReadings(start, end) {
-        return this.livongoRepository.getReadings(start, end).then(readings => {
-            this.bgReadings = readings;
+    };
+    LivongoService.prototype.getReadings = function (start, end) {
+        var _this = this;
+        return this.livongoRepository.getReadings(start, end).then(function (readings) {
+            _this.bgReadings = readings;
             return readings;
         });
-    }
-};
-LivongoService = __decorate([
-    core_1.Injectable(),
-    __param(1, core_1.Inject(livongo_repo_1.LivongoRepository)), 
-    __metadata('design:paramtypes', [http_1.Http, livongo_repo_1.LivongoRepository])
-], LivongoService);
+    };
+    LivongoService = __decorate([
+        core_1.Injectable(),
+        __param(1, core_1.Inject(livongo_repo_1.LivongoRepository)), 
+        __metadata('design:paramtypes', [http_1.Http, livongo_repo_1.LivongoRepository])
+    ], LivongoService);
+    return LivongoService;
+}());
 exports.LivongoService = LivongoService;
 //# sourceMappingURL=livongo.service.js.map

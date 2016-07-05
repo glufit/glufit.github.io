@@ -8,48 +8,49 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const http_1 = require('@angular/http');
+var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
-const LivongoReadings_1 = require("../common/user/LivongoReadings");
-const LivongoAuth_1 = require("../common/user/LivongoAuth");
-const moment = require('moment/moment');
-let LivongoRepository = class LivongoRepository {
-    constructor(http) {
+var LivongoReadings_1 = require("../common/user/LivongoReadings");
+var LivongoAuth_1 = require("../common/user/LivongoAuth");
+var moment = require('moment/moment');
+var LivongoRepository = (function () {
+    function LivongoRepository(http) {
         this.http = http;
-        this.baseUrl = "http://localhost:1337/";
+        this.baseUrl = "https://beautiful-sequoia-23051.herokuapp.com/";
         this.tokenUrl = "livongo/authorize";
         this.readingsUrl = "livongo/readings";
     }
-    authorize(username, password) {
-        let url = this.baseUrl + this.tokenUrl;
-        let body = { username: username, password: password };
+    LivongoRepository.prototype.authorize = function (username, password) {
+        var url = this.baseUrl + this.tokenUrl;
+        var body = { username: username, password: password };
         return this.http.post(url, body)
             .toPromise()
-            .then(response => {
-            let auth = response.json();
-            let authTokens = new LivongoAuth_1.LivongoAuth(auth.access_token, auth.refresh_token);
+            .then(function (response) {
+            var auth = response.json();
+            var authTokens = new LivongoAuth_1.LivongoAuth(auth.access_token, auth.refresh_token);
             return authTokens;
         });
-    }
-    getReadings(start, end) {
-        let url = this.baseUrl + this.readingsUrl;
-        let queryParams = "?start=" + start + "&end=" + end;
+    };
+    LivongoRepository.prototype.getReadings = function (start, end) {
+        var url = this.baseUrl + this.readingsUrl;
+        var queryParams = "?start=" + start + "&end=" + end;
         return this.http.get(url + queryParams)
             .toPromise()
-            .then(response => {
-            let bgs = response.json().bgs;
-            let bgReadings = bgs.map(jsonEntry => {
-                let timeStamp = moment(jsonEntry.timestamp).format("YYYY-MM-DD T HH:MM:SS").toString();
+            .then(function (response) {
+            var bgs = response.json().bgs;
+            var bgReadings = bgs.map(function (jsonEntry) {
+                var timeStamp = moment(jsonEntry.timestamp).format("YYYY-MM-DD T HH:MM:SS").toString();
                 return new LivongoReadings_1.BgReading(timeStamp, jsonEntry.value);
             });
             return new LivongoReadings_1.BgReadings(bgReadings);
         });
-    }
-};
-LivongoRepository = __decorate([
-    core_1.Injectable(), 
-    __metadata('design:paramtypes', [http_1.Http])
-], LivongoRepository);
+    };
+    LivongoRepository = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], LivongoRepository);
+    return LivongoRepository;
+}());
 exports.LivongoRepository = LivongoRepository;
 //# sourceMappingURL=livongo.repo.js.map

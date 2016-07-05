@@ -1,1 +1,1 @@
-{"version":3,"file":"LivongoAuth.js","sourceRoot":"","sources":["LivongoAuth.ts"],"names":[],"mappings":";AAAA;IACE,YAAmB,WAAmB,EAAS,YAAoB;QAAhD,gBAAW,GAAX,WAAW,CAAQ;QAAS,iBAAY,GAAZ,YAAY,CAAQ;IAAG,CAAC;AACzE,CAAC;AAFY,mBAAW,cAEvB,CAAA"}
+{"version":3,"file":"LivongoAuth.js","sourceRoot":"","sources":["LivongoAuth.ts"],"names":[],"mappings":";AAAA;IACE,qBAAmB,WAAmB,EAAS,YAAoB;QAAhD,gBAAW,GAAX,WAAW,CAAQ;QAAS,iBAAY,GAAZ,YAAY,CAAQ;IAAG,CAAC;IACzE,kBAAC;AAAD,CAAC,AAFD,IAEC;AAFY,mBAAW,cAEvB,CAAA"}

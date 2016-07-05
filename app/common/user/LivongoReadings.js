@@ -1,15 +1,17 @@
 "use strict";
-class BgReading {
-    constructor(datetime, value) {
+var BgReading = (function () {
+    function BgReading(datetime, value) {
         this.datetime = datetime;
         this.value = value;
     }
-}
+    return BgReading;
+}());
 exports.BgReading = BgReading;
-class BgReadings {
-    constructor(readings) {
+var BgReadings = (function () {
+    function BgReadings(readings) {
         this.readings = readings;
     }
-}
+    return BgReadings;
+}());
 exports.BgReadings = BgReadings;
 //# sourceMappingURL=LivongoReadings.js.map

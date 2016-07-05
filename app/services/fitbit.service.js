@@ -11,30 +11,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-const core_1 = require('@angular/core');
-const http_1 = require('@angular/http');
+var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
-const fitbit_repo_1 = require("../repo/fitbit.repo");
-let FitbitService = class FitbitService {
-    constructor(http, fitbitRepository) {
+var fitbit_repo_1 = require("../repo/fitbit.repo");
+var FitbitService = (function () {
+    function FitbitService(http, fitbitRepository) {
         this.http = http;
         this.fitbitRepository = fitbitRepository;
     }
-    authorize() {
-        this.fitbitRepository.authorize("barevalo@livongo.com", "CAMera14").then(auth => {
+    FitbitService.prototype.authorize = function () {
+        this.fitbitRepository.authorize("barevalo@livongo.com", "CAMera14").then(function (auth) {
             return auth;
         });
-    }
-    getIntradayData(type, date) {
-        return this.fitbitRepository.getIntradayData(type, date).then(readings => {
+    };
+    FitbitService.prototype.getIntradayData = function (type, date) {
+        return this.fitbitRepository.getIntradayData(type, date).then(function (readings) {
             return readings;
         });
-    }
-};
-FitbitService = __decorate([
-    core_1.Injectable(),
-    __param(1, core_1.Inject(fitbit_repo_1.FitbitRepository)), 
-    __metadata('design:paramtypes', [http_1.Http, fitbit_repo_1.FitbitRepository])
-], FitbitService);
+    };
+    FitbitService = __decorate([
+        core_1.Injectable(),
+        __param(1, core_1.Inject(fitbit_repo_1.FitbitRepository)), 
+        __metadata('design:paramtypes', [http_1.Http, fitbit_repo_1.FitbitRepository])
+    ], FitbitService);
+    return FitbitService;
+}());
 exports.FitbitService = FitbitService;
 //# sourceMappingURL=fitbit.service.js.map
