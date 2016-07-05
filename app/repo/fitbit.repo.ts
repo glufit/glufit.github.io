@@ -9,7 +9,7 @@ import {FitbitIntraDayData, FitbitIntraDayDataSet} from "../common/user/FitbitIn
 export class FitbitRepository {
   constructor(private http: Http) { }
 
-  baseUrl     = "http://localhost:1337/"
+  baseUrl     = "https://beautiful-sequoia-23051.herokuapp.com/"
   tokenUrl    = "fitbit/authorize"
   intraDayDataUrl = "fitbit/intradayData"
 
