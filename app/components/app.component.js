@@ -29,7 +29,7 @@ var AppComponent = (function () {
                 type: 'scatter',
                 zoomType: 'x'
             },
-            title: { text: 'Glufit' },
+            title: { text: '' },
             dateTimeLabelFormats: {
                 month: '%e. %b',
                 year: '%b'
@@ -75,7 +75,9 @@ var AppComponent = (function () {
         this.chart = chartInstance;
     };
     AppComponent.prototype.onResize = function (event) {
-        this.chart.setSize(window.innerWidth, window.innerHeight, true);
+        var th = document.getElementById('buttons').offsetHeight;
+        var bh = document.getElementById('title').offsetHeight;
+        this.chart.setSize(window.innerWidth, window.innerHeight - th - bh, true);
     };
     AppComponent.prototype.previousDay = function () {
         while (this.chart.series.length > 0)
@@ -167,6 +169,7 @@ var AppComponent = (function () {
             _this.chart.addSeries(_this.fitbitOptions, true, true);
             _this.chart.addSeries(_this.fitbitHeartOptions, true, true);
             _this.chart.addSeries(_this.livongoOptions, true, true);
+            _this.onResize(null);
             _this.chart.redraw(true);
             document.getElementsByClassName("highcharts-container")[0].classList.add('animated', 'flipInY');
         });
@@ -186,7 +189,7 @@ var AppComponent = (function () {
                 fitbit_service_1.FitbitService,
                 fitbit_repo_1.FitbitRepository
             ],
-            styles: ["\n      chart {\n        width: 100%;\n        height: 100%;\n      }\n    "]
+            styles: ["\n      chart {\n        position:relative;\n        width: 100%;\n        height: 100%;\n      }\n    "]
         }), 
         __metadata('design:paramtypes', [livongo_service_1.LivongoService, fitbit_service_1.FitbitService])
     ], AppComponent);
