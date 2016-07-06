@@ -24,6 +24,7 @@ import _ = require("underscore");
   ],
   styles: [`
       chart {
+        position:relative;
         width: 100%;
         height: 100%;
       }
@@ -36,7 +37,7 @@ export class AppComponent {
         type: 'scatter',
         zoomType: 'x'
       },
-      title : { text : 'Glufit' },
+      title : { text : '' },
       dateTimeLabelFormats: { // don't display the dummy year
         month: '%e. %b',
         year: '%b'
@@ -93,7 +94,9 @@ export class AppComponent {
 
 
   onResize(event) {
-    this.chart.setSize(window.innerWidth, window.innerHeight,true)
+    var th = document.getElementById('buttons').offsetHeight
+    var bh = document.getElementById('title').offsetHeight
+    this.chart.setSize(window.innerWidth, window.innerHeight - th - bh,true)
   }
 
   previousDay(){
@@ -198,6 +201,7 @@ export class AppComponent {
       this.chart.addSeries(this.fitbitOptions,      true, true)
       this.chart.addSeries(this.fitbitHeartOptions, true, true)
       this.chart.addSeries(this.livongoOptions,     true, true)
+      this.onResize(null)
       this.chart.redraw(true)
       document.getElementsByClassName("highcharts-container")[0].classList.add('animated', 'flipInY')
     });

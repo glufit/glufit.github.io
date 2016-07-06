@@ -1,9 +1,10 @@
+<p id ="title" style = "text-align: center; width: 100%; font-size: 5vw" class = "tk-brush-script-std"> Glufit</p>
 <chart id = "mainChart"
   (window:resize)="onResize($event)"
   [options]="options"
   (load)="saveInstance($event.context)"></chart>
 
-<div class="table">
+<div id = "buttons" class="table">
   <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
       <p style="text-align: center;">
